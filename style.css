@@ -1,5 +1,5 @@
 /* ===============================================
-   PREMIUM CALCULATOR - COMPLETE STYLES V2.0 FIXED
+   PREMIUM CALCULATOR - COMPLETE STYLES V2.0
    =============================================== */
 
 /* === CSS VARIABLES === */
@@ -1466,3 +1466,4 @@ body:not([data-theme="dark"]) .footer-copyright strong {
         justify-content: center;
     }
 }
+
