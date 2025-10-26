@@ -1,5 +1,5 @@
 /* ===============================================
-   PREMIUM CALCULATOR - COMPLETE STYLES
+   PREMIUM CALCULATOR - COMPLETE STYLES V2.0
    =============================================== */
 
 /* === CSS VARIABLES === */
@@ -90,6 +90,7 @@ body::before {
 .calculator-card {
     background: var(--glass-bg);
     backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     border-radius: 32px;
     padding: 32px;
     box-shadow: 0 25px 50px -12px var(--shadow), 0 0 0 1px var(--glass-border);
@@ -114,6 +115,7 @@ body::before {
 .mode-switches {
     display: flex;
     gap: 10px;
+    flex-wrap: wrap;
 }
 
 .mode-btn {
@@ -148,13 +150,16 @@ body::before {
     height: 56px;
     cursor: pointer;
     transition: all 0.4s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .theme-toggle:hover {
     transform: rotate(180deg) scale(1.15);
 }
 
-/* === DISPLAY === */
+/* === DISPLAY (COMPLETE FIX) === */
 .display {
     background: var(--display-bg);
     border-radius: 24px;
@@ -182,7 +187,7 @@ body::before {
 }
 
 .display-input {
-    color: var(--text-secondary);
+    color: #94a3b8 !important; /* Light gray-blue - VISIBLE */
     font-size: 18px;
     margin-bottom: 10px;
     word-wrap: break-word;
@@ -190,6 +195,17 @@ body::before {
     width: 100%;
     position: relative;
     z-index: 1;
+    font-weight: 500;
+}
+
+/* Force visibility in light mode */
+body:not([data-theme="dark"]) .display-input {
+    color: #e2e8f0 !important; /* Even lighter for dark display background */
+}
+
+/* Dark mode */
+[data-theme="dark"] .display-input {
+    color: #cbd5e0 !important;
 }
 
 .display-result {
@@ -204,7 +220,80 @@ body::before {
     text-shadow: 0 2px 10px rgba(16, 185, 129, 0.5);
 }
 
-/* === VIEWS === */
+/* === INPUT SECTION (COMPLETE FIX) === */
+.input-section {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.calculator-input {
+    width: 100%;
+    padding: 16px 50px 16px 20px;
+    border-radius: 16px;
+    border: 3px solid #667eea;
+    background: #ffffff !important; /* Force white background */
+    color: #1a202c !important; /* Force dark text */
+    font-size: 18px;
+    font-weight: 600;
+    font-family: 'Courier New', monospace;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+/* Dark mode */
+[data-theme="dark"] .calculator-input {
+    border: 3px solid #6366f1;
+    background: #1e293b !important;
+    color: #f1f5f9 !important;
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+}
+
+.calculator-input::placeholder {
+    color: #64748b !important; /* Visible gray */
+    opacity: 1 !important;
+}
+
+[data-theme="dark"] .calculator-input::placeholder {
+    color: #94a3b8 !important;
+}
+
+.calculator-input:focus {
+    outline: none;
+    border-color: #764ba2;
+    box-shadow: 0 6px 20px rgba(118, 75, 162, 0.5);
+    transform: translateY(-2px);
+}
+
+.input-clear-btn {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: none;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #ffffff;
+    font-size: 24px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.input-clear-btn:hover {
+    transform: translateY(-50%) scale(1.15);
+    box-shadow: 0 6px 16px rgba(102, 126, 234, 0.6);
+}
+
+.input-clear-btn:active {
+    transform: translateY(-50%) scale(0.95);
+}
+
+/* === CALCULATOR VIEWS === */
 .calculator-view {
     display: none;
 }
@@ -214,7 +303,7 @@ body::before {
     animation: fadeIn 0.4s ease;
 }
 
-/* === BUTTONS === */
+/* === BUTTON GRID === */
 .button-grid {
     display: grid;
     gap: 12px;
@@ -293,6 +382,12 @@ body::before {
     transform: translateY(-2px);
 }
 
+.subject-select:focus, .formula-select:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--shadow);
+}
+
 .formula-inputs {
     display: flex;
     flex-direction: column;
@@ -324,6 +419,7 @@ body::before {
 .input-group input:focus {
     outline: none;
     border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--shadow);
     transform: translateY(-2px);
 }
 
@@ -348,6 +444,10 @@ body::before {
     box-shadow: 0 12px 30px var(--shadow-lg);
 }
 
+.formula-calculate:active {
+    transform: translateY(0);
+}
+
 .formula-info {
     background: var(--history-bg);
     border-radius: 16px;
@@ -356,6 +456,12 @@ body::before {
     font-size: 14px;
     color: var(--text-secondary);
     border-left: 4px solid var(--accent);
+}
+
+.formula-info strong {
+    color: var(--text-primary);
+    display: block;
+    margin-bottom: 8px;
 }
 
 /* === HISTORY === */
@@ -399,6 +505,10 @@ body::before {
     transform: translateY(-2px);
 }
 
+.clear-history:active {
+    transform: translateY(0);
+}
+
 .history-list {
     display: flex;
     flex-direction: column;
@@ -413,11 +523,19 @@ body::before {
     color: var(--text-secondary);
     transition: all 0.3s ease;
     border-left: 3px solid transparent;
+    cursor: pointer;
+    animation: slideInHistory 0.3s ease;
 }
 
 .history-item:hover {
     border-left-color: var(--accent);
     transform: translateX(5px);
+    background: var(--button-hover);
+    box-shadow: 0 2px 8px var(--shadow);
+}
+
+.history-item:active {
+    transform: translateX(5px) scale(0.98);
 }
 
 .history-empty {
@@ -427,25 +545,197 @@ body::before {
     font-style: italic;
 }
 
+/* === HELP BUTTON === */
+.help-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: none;
+    background: var(--operator-bg);
+    color: var(--operator-text);
+    font-size: 24px;
+    cursor: pointer;
+    box-shadow: 0 8px 20px var(--shadow-lg);
+    transition: all 0.3s ease;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.help-btn:hover {
+    transform: scale(1.15);
+    box-shadow: 0 12px 30px var(--shadow-lg);
+}
+
+.help-btn:active {
+    transform: scale(1.05);
+}
+
+/* === KEYBOARD SHORTCUTS MODAL === */
+.shortcuts-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.shortcuts-modal.active {
+    display: flex;
+    animation: fadeIn 0.3s ease;
+}
+
+.shortcuts-content {
+    background: var(--bg-secondary);
+    border-radius: 24px;
+    padding: 32px;
+    max-width: 500px;
+    width: 100%;
+    max-height: 80vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+    animation: slideUp 0.3s ease;
+}
+
+.shortcuts-content h3 {
+    margin-bottom: 24px;
+    color: var(--text-primary);
+    font-size: 24px;
+    padding-right: 40px;
+}
+
+.close-modal {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: none;
+    background: var(--button-bg);
+    color: var(--text-primary);
+    font-size: 24px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.close-modal:hover {
+    background: var(--button-hover);
+    transform: scale(1.1);
+}
+
+.close-modal:active {
+    transform: scale(0.95);
+}
+
+.shortcuts-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.shortcut-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    background: var(--button-bg);
+    border-radius: 12px;
+    transition: all 0.2s ease;
+}
+
+.shortcut-item:hover {
+    background: var(--button-hover);
+    transform: translateX(5px);
+}
+
+.shortcut-item kbd {
+    background: var(--operator-bg);
+    color: var(--operator-text);
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-family: 'Courier New', monospace;
+    font-weight: 600;
+    font-size: 14px;
+    box-shadow: 0 2px 4px var(--shadow);
+    min-width: 60px;
+    text-align: center;
+}
+
+.shortcut-item span {
+    color: var(--text-secondary);
+    font-weight: 500;
+    flex: 1;
+    text-align: right;
+    margin-left: 16px;
+}
+
+.shortcuts-tip {
+    background: var(--history-bg);
+    padding: 16px;
+    border-radius: 12px;
+    border-left: 4px solid var(--accent);
+    color: var(--text-secondary);
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.shortcuts-tip strong {
+    color: var(--text-primary);
+    display: block;
+    margin-bottom: 6px;
+}
+
 /* === SCROLLBAR === */
-.history-section::-webkit-scrollbar {
+.history-section::-webkit-scrollbar,
+.shortcuts-content::-webkit-scrollbar {
     width: 10px;
 }
 
-.history-section::-webkit-scrollbar-track {
+.history-section::-webkit-scrollbar-track,
+.shortcuts-content::-webkit-scrollbar-track {
     background: var(--button-bg);
     border-radius: 10px;
 }
 
-.history-section::-webkit-scrollbar-thumb {
+.history-section::-webkit-scrollbar-thumb,
+.shortcuts-content::-webkit-scrollbar-thumb {
     background: var(--border);
     border-radius: 10px;
 }
 
+.history-section::-webkit-scrollbar-thumb:hover,
+.shortcuts-content::-webkit-scrollbar-thumb:hover {
+    background: var(--text-secondary);
+}
+
 /* === ANIMATIONS === */
 @keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
+    from { 
+        opacity: 0; 
+        transform: translateY(30px); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0); 
+    }
 }
 
 @keyframes fadeIn {
@@ -453,15 +743,47 @@ body::before {
     to { opacity: 1; }
 }
 
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes slideInHistory {
+    from {
+        opacity: 0;
+        transform: translateX(-15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
 @keyframes pulse {
-    0%, 100% { box-shadow: 0 8px 20px var(--shadow-lg); }
-    50% { box-shadow: 0 8px 30px var(--shadow-lg), 0 0 0 4px var(--glass-border); }
+    0%, 100% { 
+        box-shadow: 0 8px 20px var(--shadow-lg); 
+    }
+    50% { 
+        box-shadow: 0 8px 30px var(--shadow-lg), 0 0 0 4px var(--glass-border); 
+    }
 }
 
 @keyframes particleMove {
-    0%, 100% { transform: translate(0, 0) scale(1); }
-    33% { transform: translate(50px, -50px) scale(1.1); }
-    66% { transform: translate(-50px, 50px) scale(0.9); }
+    0%, 100% { 
+        transform: translate(0, 0) scale(1); 
+    }
+    33% { 
+        transform: translate(50px, -50px) scale(1.1); 
+    }
+    66% { 
+        transform: translate(-50px, 50px) scale(0.9); 
+    }
 }
 
 @keyframes displayShine {
@@ -469,20 +791,108 @@ body::before {
     to { transform: rotate(360deg); }
 }
 
-/* === RESPONSIVE === */
 @media (max-width: 600px) {
-    .calculator-card { padding: 20px; }
-    .mode-btn { font-size: 24px; padding: 10px 16px; }
-    .display { padding: 20px; min-height: 80px; }
-    .display-result { font-size: 32px; }
-    .calc-btn { padding: 18px; font-size: 16px; }
-    .scientific-grid { grid-template-columns: repeat(4, 1fr); }
+    .calculator-card { 
+        padding: 16px; 
+    }
+    
+    .mode-btn { 
+        font-size: 22px; 
+        padding: 8px 14px; 
+    }
+    
+    .display { 
+        padding: 20px; 
+        min-height: 80px; 
+    }
+    
+    .display-result { 
+        font-size: 32px; 
+    }
+    
+    .calc-btn { 
+        padding: 14px 8px; /* Reduced horizontal padding */
+        font-size: 14px; 
+        border-radius: 12px; /* Smaller radius */
+    }
+    
+    /* Scientific calculator grid - proper mobile layout */
+    .scientific-grid { 
+        grid-template-columns: repeat(5, 1fr); /* Keep 5 columns */
+        gap: 8px; /* Reduced gap */
+    }
+    
+    /* Smaller text for scientific functions on mobile */
+    .scientific-grid .calc-btn {
+        padding: 12px 4px;
+        font-size: 13px;
+    }
+    
+    /* Input field on mobile */
+    .calculator-input {
+        font-size: 16px;
+        padding: 14px 45px 14px 16px;
+    }
+    
+    .input-clear-btn {
+        width: 32px;
+        height: 32px;
+        font-size: 20px;
+    }
 }
 
 @media (max-width: 400px) {
-    body { padding: 10px; }
-    .calculator-card { padding: 16px; }
-    .mode-btn { font-size: 20px; padding: 8px 12px; }
-    .display-result { font-size: 28px; }
-    .calc-btn { padding: 14px; font-size: 14px; }
+    body { 
+        padding: 8px; 
+    }
+    
+    .calculator-card { 
+        padding: 12px; 
+        border-radius: 24px;
+    }
+    
+    .mode-btn { 
+        font-size: 20px; 
+        padding: 6px 10px; 
+    }
+    
+    .display-result { 
+        font-size: 28px; 
+    }
+    
+    .display-input {
+        font-size: 14px;
+    }
+    
+    .calc-btn { 
+        padding: 12px 6px; 
+        font-size: 13px; 
+    }
+    
+    /* Scientific grid - ultra compact for very small screens */
+    .scientific-grid {
+        gap: 6px;
+    }
+    
+    .scientific-grid .calc-btn {
+        padding: 10px 2px;
+        font-size: 12px;
+    }
+    
+    .calculator-input {
+        font-size: 15px;
+        padding: 12px 40px 12px 14px;
+    }
+    
+    .button-grid {
+        gap: 8px;
+    }
+}
+
+/* Extra small screens - portrait phones */
+@media (max-width: 360px) {
+    .scientific-grid .calc-btn {
+        padding: 8px 2px;
+        font-size: 11px;
+    }
 }
