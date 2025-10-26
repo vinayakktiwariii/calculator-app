@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Premium emoji calculator with normal, scientific, and formula modes">
+    <title>🧮 Premium Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="calculator-card">
+            <!-- Top Bar -->
+            <div class="top-bar">
+                <div class="mode-switches">
+                    <button class="mode-btn active" data-mode="normal" title="Normal Calculator">😄</button>
+                    <button class="mode-btn" data-mode="scientific" title="Scientific Calculator">😈</button>
+                    <button class="mode-btn" data-mode="formula" title="Formula Calculator">😇</button>
+                </div>
+                <button class="theme-toggle" id="themeToggle" title="Toggle Theme">🌞</button>
+            </div>
+
+            <!-- Display -->
+            <div class="display">
+                <div class="display-input" id="displayInput"></div>
+                <div class="display-result" id="displayResult">0</div>
+            </div>
+
+            <!-- Normal Calculator -->
+            <div class="calculator-view active" id="normalCalc">
+                <div class="button-grid normal-grid">
+                    <button class="calc-btn operator" data-action="clear">AC</button>
+                    <button class="calc-btn operator" data-action="backspace">⌫</button>
+                    <button class="calc-btn operator" data-value="%">%</button>
+                    <button class="calc-btn operator" data-value="/">÷</button>
+                    <button class="calc-btn" data-value="7">7</button>
+                    <button class="calc-btn" data-value="8">8</button>
+                    <button class="calc-btn" data-value="9">9</button>
+                    <button class="calc-btn operator" data-value="*">×</button>
+                    <button class="calc-btn" data-value="4">4</button>
+                    <button class="calc-btn" data-value="5">5</button>
+                    <button class="calc-btn" data-value="6">6</button>
+                    <button class="calc-btn operator" data-value="-">−</button>
+                    <button class="calc-btn" data-value="1">1</button>
+                    <button class="calc-btn" data-value="2">2</button>
+                    <button class="calc-btn" data-value="3">3</button>
+                    <button class="calc-btn operator" data-value="+">+</button>
+                    <button class="calc-btn span-2" data-value="0">0</button>
+                    <button class="calc-btn" data-value=".">.</button>
+                    <button class="calc-btn operator" data-action="equals">=</button>
+                </div>
+            </div>
+
+            <!-- Scientific Calculator -->
+            <div class="calculator-view" id="scientificCalc">
+                <div class="button-grid scientific-grid">
+                    <button class="calc-btn operator" data-value="sin">sin</button>
+                    <button class="calc-btn operator" data-value="cos">cos</button>
+                    <button class="calc-btn operator" data-value="tan">tan</button>
+                    <button class="calc-btn operator" data-value="log">log</button>
+                    <button class="calc-btn operator" data-action="clear">AC</button>
+                    
+                    <button class="calc-btn operator" data-value="asin">sin⁻¹</button>
+                    <button class="calc-btn operator" data-value="acos">cos⁻¹</button>
+                    <button class="calc-btn operator" data-value="atan">tan⁻¹</button>
+                    <button class="calc-btn operator" data-value="ln">ln</button>
+                    <button class="calc-btn operator" data-value="/">÷</button>
+                    
+                    <button class="calc-btn operator" data-value="^">x^y</button>
+                    <button class="calc-btn operator" data-value="sqrt">√</button>
+                    <button class="calc-btn" data-value="7">7</button>
+                    <button class="calc-btn" data-value="8">8</button>
+                    <button class="calc-btn" data-value="9">9</button>
+                    
+                    <button class="calc-btn operator" data-value="x2">x²</button>
+                    <button class="calc-btn operator" data-value="x3">x³</button>
+                    <button class="calc-btn" data-value="4">4</button>
+                    <button class="calc-btn" data-value="5">5</button>
+                    <button class="calc-btn" data-value="6">6</button>
+                    
+                    <button class="calc-btn operator" data-value="pi">π</button>
+                    <button class="calc-btn operator" data-value="e">e</button>
+                    <button class="calc-btn" data-value="1">1</button>
+                    <button class="calc-btn" data-value="2">2</button>
+                    <button class="calc-btn" data-value="3">3</button>
+                    
+                    <button class="calc-btn operator" data-value="(">(</button>
+                    <button class="calc-btn operator" data-value=")">)</button>
+                    <button class="calc-btn" data-value="0">0</button>
+                    <button class="calc-btn" data-value=".">.</button>
+                    <button class="calc-btn operator" data-value="*">×</button>
+                    
+                    <button class="calc-btn operator" data-value="!">n!</button>
+                    <button class="calc-btn operator" data-value="ans">ANS</button>
+                    <button class="calc-btn operator" data-value="+">+</button>
+                    <button class="calc-btn operator" data-value="-">−</button>
+                    <button class="calc-btn operator" data-action="equals">=</button>
+                </div>
+            </div>
+
+            <!-- Formula Calculator -->
+            <div class="calculator-view" id="formulaCalc">
+                <div class="formula-section">
+                    <select class="subject-select" id="subjectSelect">
+                        <option value="">Select Subject...</option>
+                        <option value="mathematics">📐 Mathematics</option>
+                        <option value="physics">⚛️ Physics</option>
+                        <option value="chemistry">🧪 Chemistry</option>
+                        <option value="commerce">💰 Commerce</option>
+                        <option value="geometry">📏 Geometry</option>
+                    </select>
+                    <select class="formula-select" id="formulaSelect">
+                        <option value="">First select a subject...</option>
+                    </select>
+                    <div class="formula-inputs" id="formulaInputs"></div>
+                </div>
+            </div>
+
+            <!-- History Section -->
+            <div class="history-section">
+                <div class="history-header">
+                    <h3>📜 History</h3>
+                    <button class="clear-history" id="clearHistory">Clear All</button>
+                </div>
+                <div class="history-list" id="historyList">
+                    <div class="history-empty">No calculations yet</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
