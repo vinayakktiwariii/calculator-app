@@ -37,13 +37,13 @@ A beautiful, feature-rich calculator web application with multiple modes, built 
 ## 📸 Screenshots
 
 ### Dark Mode
-![Dark Mode](https://via.placeholder.com/800x400?text=Dark+Mode+Screenshot)
+![Dark Mode] (https://github.com/vinayakktiwariii/calculator-app/blob/main/screen-shots/dark-mode.png)
 
 ### Light Mode
-![Light Mode](https://via.placeholder.com/800x400?text=Light+Mode+Screenshot)
+![Light Mode] (https://github.com/vinayakktiwariii/calculator-app/blob/main/screen-shots/light-mode.png)
 
 ### Mobile View
-![Mobile](https://via.placeholder.com/400x800?text=Mobile+View)
+![Mobile] (https://github.com/vinayakktiwariii/calculator-app/blob/main/screen-shots/mobile-view.png)
 
 ## 🛠️ Technologies Used
 
@@ -148,10 +148,16 @@ calculator-app/
 ### Change Theme Colors
 
 Edit CSS variables in `style.css`:
-:root {
+
+:root 
+{
+
 --bg-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+
 --accent: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+
 /* Modify colors here */
+
 }
 
 
@@ -160,12 +166,19 @@ Edit CSS variables in `style.css`:
 Edit `script.js` and add to the `formulas` object:
 
 formulas.mathematics.push({
+
 name: "Your Formula",
+
 inputs: ["Variable 1", "Variable 2"],
+
 calculate: (values) => {
+
 // Your calculation logic
+
 return result;
+
 }
+
 });
 
 
@@ -235,6 +248,7 @@ If you like this project, please give it a ⭐ on [GitHub](https://github.com/vi
 [⬆ Back to Top](#-premium-calculator)
 
 </div>
+
 
 
 
