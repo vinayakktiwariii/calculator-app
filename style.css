@@ -1,5 +1,5 @@
 /* ===============================================
-   PREMIUM CALCULATOR - COMPLETE STYLES V2.0
+   PREMIUM CALCULATOR - COMPLETE STYLES V2.0 FIXED
    =============================================== */
 
 /* === CSS VARIABLES === */
@@ -58,9 +58,9 @@ body {
     color: var(--text-primary);
     min-height: 100vh;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    padding: 20px;
+    padding: 20px 20px 0 20px; /* Remove bottom padding */
     transition: all 0.4s ease;
 }
 
@@ -85,6 +85,10 @@ body::before {
     max-width: 550px;
     position: relative;
     z-index: 1;
+    flex: 1; /* Takes available space, pushes footer down */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .calculator-card {
@@ -159,7 +163,7 @@ body::before {
     transform: rotate(180deg) scale(1.15);
 }
 
-/* === DISPLAY (COMPLETE FIX) === */
+/* === DISPLAY === */
 .display {
     background: var(--display-bg);
     border-radius: 24px;
@@ -187,7 +191,7 @@ body::before {
 }
 
 .display-input {
-    color: #94a3b8 !important; /* Light gray-blue - VISIBLE */
+    color: #e2e8f0;
     font-size: 18px;
     margin-bottom: 10px;
     word-wrap: break-word;
@@ -198,14 +202,8 @@ body::before {
     font-weight: 500;
 }
 
-/* Force visibility in light mode */
-body:not([data-theme="dark"]) .display-input {
-    color: #e2e8f0 !important; /* Even lighter for dark display background */
-}
-
-/* Dark mode */
 [data-theme="dark"] .display-input {
-    color: #cbd5e0 !important;
+    color: #cbd5e0;
 }
 
 .display-result {
@@ -220,7 +218,7 @@ body:not([data-theme="dark"]) .display-input {
     text-shadow: 0 2px 10px rgba(16, 185, 129, 0.5);
 }
 
-/* === INPUT SECTION (COMPLETE FIX) === */
+/* === INPUT SECTION === */
 .input-section {
     position: relative;
     margin-bottom: 20px;
@@ -231,8 +229,8 @@ body:not([data-theme="dark"]) .display-input {
     padding: 16px 50px 16px 20px;
     border-radius: 16px;
     border: 3px solid #667eea;
-    background: #ffffff !important; /* Force white background */
-    color: #1a202c !important; /* Force dark text */
+    background: #ffffff;
+    color: #1a202c;
     font-size: 18px;
     font-weight: 600;
     font-family: 'Courier New', monospace;
@@ -240,21 +238,21 @@ body:not([data-theme="dark"]) .display-input {
     box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
 }
 
-/* Dark mode */
 [data-theme="dark"] .calculator-input {
     border: 3px solid #6366f1;
-    background: #1e293b !important;
-    color: #f1f5f9 !important;
+    background: #1e293b;
+    color: #f1f5f9;
     box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
 }
 
 .calculator-input::placeholder {
-    color: #64748b !important; /* Visible gray */
-    opacity: 1 !important;
+    color: #64748b;
+    opacity: 0.8;
 }
 
 [data-theme="dark"] .calculator-input::placeholder {
-    color: #94a3b8 !important;
+    color: #94a3b8;
+    opacity: 0.7;
 }
 
 .calculator-input:focus {
@@ -262,6 +260,11 @@ body:not([data-theme="dark"]) .display-input {
     border-color: #764ba2;
     box-shadow: 0 6px 20px rgba(118, 75, 162, 0.5);
     transform: translateY(-2px);
+}
+
+[data-theme="dark"] .calculator-input:focus {
+    border-color: #8b5cf6;
+    box-shadow: 0 6px 20px rgba(139, 92, 246, 0.5);
 }
 
 .input-clear-btn {
@@ -546,19 +549,21 @@ body:not([data-theme="dark"]) .display-input {
 }
 
 /* === HELP BUTTON === */
+/* === ENHANCED HELP BUTTON === */
 .help-btn {
     position: fixed;
     bottom: 20px;
     right: 20px;
-    width: 56px;
-    height: 56px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
-    border: none;
-    background: var(--operator-bg);
-    color: var(--operator-text);
-    font-size: 24px;
+    border: 3px solid #667eea; /* Bright blue border */
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #ffffff;
+    font-size: 28px;
+    font-weight: 700;
     cursor: pointer;
-    box-shadow: 0 8px 20px var(--shadow-lg);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
     transition: all 0.3s ease;
     z-index: 1000;
     display: flex;
@@ -566,13 +571,86 @@ body:not([data-theme="dark"]) .display-input {
     justify-content: center;
 }
 
-.help-btn:hover {
-    transform: scale(1.15);
-    box-shadow: 0 12px 30px var(--shadow-lg);
+/* Pulsing notification dot */
+.help-btn::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    width: 14px;
+    height: 14px;
+    background: #10b981; /* Green notification */
+    border: 3px solid var(--bg-secondary);
+    border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
 }
 
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.2);
+        opacity: 0.8;
+    }
+}
+
+/* Wiggle animation on hover */
+.help-btn:hover {
+    animation: wiggle 0.7s ease-in-out;
+    background: linear-gradient(135deg, #5568d3 0%, #6a3f8f 100%);
+    box-shadow: 0 12px 35px rgba(102, 126, 234, 0.8);
+    transform: scale(1.1);
+}
+
+@keyframes wiggle {
+    0% { transform: rotate(0deg) scale(1.1); }
+    25% { transform: rotate(-15deg) scale(1.15); }
+    50% { transform: rotate(15deg) scale(1.15); }
+    75% { transform: rotate(-10deg) scale(1.15); }
+    100% { transform: rotate(0deg) scale(1.1); }
+}
+
+/* Active state */
 .help-btn:active {
     transform: scale(1.05);
+}
+
+/* Light mode adjustments */
+body:not([data-theme="dark"]) .help-btn {
+    border-color: #667eea;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.7);
+}
+
+body:not([data-theme="dark"]) .help-btn::before {
+    border-color: #ffffff;
+}
+
+/* Dark mode */
+[data-theme="dark"] .help-btn {
+    border-color: #818cf8;
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+}
+
+/* Floating animation (optional - adds constant motion) */
+.help-btn {
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* Override float on hover to allow wiggle */
+.help-btn:hover {
+    animation: wiggle 0.7s ease-in-out;
 }
 
 /* === KEYBOARD SHORTCUTS MODAL === */
@@ -791,6 +869,23 @@ body:not([data-theme="dark"]) .display-input {
     to { transform: rotate(360deg); }
 }
 
+@keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    10%, 30% { transform: scale(1.3); }
+    20%, 40% { transform: scale(1); }
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 200% 50%; }
+}
+
+/* === RESPONSIVE === */
 @media (max-width: 600px) {
     .calculator-card { 
         padding: 16px; 
@@ -811,24 +906,21 @@ body:not([data-theme="dark"]) .display-input {
     }
     
     .calc-btn { 
-        padding: 14px 8px; /* Reduced horizontal padding */
+        padding: 14px 8px;
         font-size: 14px; 
-        border-radius: 12px; /* Smaller radius */
+        border-radius: 12px;
     }
     
-    /* Scientific calculator grid - proper mobile layout */
     .scientific-grid { 
-        grid-template-columns: repeat(5, 1fr); /* Keep 5 columns */
-        gap: 8px; /* Reduced gap */
+        grid-template-columns: repeat(5, 1fr);
+        gap: 8px;
     }
     
-    /* Smaller text for scientific functions on mobile */
     .scientific-grid .calc-btn {
         padding: 12px 4px;
         font-size: 13px;
     }
     
-    /* Input field on mobile */
     .calculator-input {
         font-size: 16px;
         padding: 14px 45px 14px 16px;
@@ -869,7 +961,6 @@ body:not([data-theme="dark"]) .display-input {
         font-size: 13px; 
     }
     
-    /* Scientific grid - ultra compact for very small screens */
     .scientific-grid {
         gap: 6px;
     }
@@ -889,10 +980,489 @@ body:not([data-theme="dark"]) .display-input {
     }
 }
 
-/* Extra small screens - portrait phones */
 @media (max-width: 360px) {
     .scientific-grid .calc-btn {
         padding: 8px 2px;
         font-size: 11px;
+    }
+}
+
+/* ===============================================
+   PREMIUM FULL-WIDTH FOOTER WITH EFFECTS
+   =============================================== */
+
+/* Subtle Footer Divider Line (Less Distracting) */
+.footer-divider {
+    width: 100%;
+    height: 1px; /* Thinner */
+    background: linear-gradient(
+        90deg, 
+        transparent, 
+        rgba(102, 126, 234, 0.3) 30%, 
+        rgba(118, 75, 162, 0.3) 70%, 
+        transparent
+    );
+    box-shadow: 0 0 10px rgba(102, 126, 234, 0.2); /* Softer glow */
+    margin-bottom: 0;
+    /* Remove animation for cleaner look */
+}
+
+/* Main Footer Container */
+.site-footer {
+    position: relative;
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+    margin-top: auto;
+    background: rgba(15, 23, 42, 0.75);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border-top: 1px solid rgba(148, 163, 184, 0.15);
+    transition: all 0.4s ease;
+}
+
+/* Light mode - darker background for visibility */
+body:not([data-theme="dark"]) .site-footer {
+    background: rgba(30, 41, 59, 0.85);
+    border-top: 1px solid rgba(100, 116, 139, 0.2);
+}
+
+[data-theme="dark"] .site-footer {
+    background: rgba(10, 15, 30, 0.8);
+}
+
+/* Hover effect on entire footer */
+.site-footer:hover {
+    background: rgba(15, 23, 42, 0.85);
+    box-shadow: 0 -5px 30px rgba(102, 126, 234, 0.2);
+}
+
+body:not([data-theme="dark"]) .site-footer:hover {
+    background: rgba(30, 41, 59, 0.95);
+    box-shadow: 0 -5px 30px rgba(102, 126, 234, 0.15);
+}
+
+/* Footer Content Grid */
+.footer-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 24px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 40px;
+    position: relative;
+}
+
+/* Animated background particles effect */
+.footer-content::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: 
+        radial-gradient(circle at 20% 50%, rgba(102, 126, 234, 0.03), transparent 50%),
+        radial-gradient(circle at 80% 50%, rgba(118, 75, 162, 0.03), transparent 50%);
+    animation: particleFloat 8s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes particleFloat {
+    0%, 100% { opacity: 0.3; transform: translateY(0); }
+    50% { opacity: 0.6; transform: translateY(-5px); }
+}
+
+/* Left Side - Creator + Buttons */
+.footer-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    position: relative;
+    z-index: 1;
+}
+
+.footer-text {
+    font-size: 14px;
+    color: #cbd5e0; /* Light for dark mode */
+    font-weight: 500;
+    white-space: nowrap;
+    transition: all 0.3s ease;
+}
+
+/* Light mode text - much darker for visibility */
+body:not([data-theme="dark"]) .footer-text {
+    color: #f1f5f9; /* Very light, almost white */
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5); /* Shadow for contrast */
+}
+
+.footer-text strong {
+    font-weight: 800;
+    color: #ffffff; /* Pure white - always visible */
+    text-shadow: 0 2px 8px rgba(102, 126, 234, 0.6), 0 0 20px rgba(118, 75, 162, 0.4);
+    transition: all 0.3s ease;
+}
+
+/* Enhanced glow on hover */
+.footer-left:hover .footer-text strong {
+    color: #ffffff;
+    text-shadow: 0 2px 12px rgba(102, 126, 234, 0.9), 0 0 30px rgba(118, 75, 162, 0.7);
+}
+
+/* Enhanced gradient on hover */
+.footer-left:hover .footer-text strong {
+    background: linear-gradient(135deg, #5568d3 0%, #6a3f8f 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+}
+
+[data-theme="dark"] .footer-text strong {
+    background: linear-gradient(135deg, #818cf8 0%, #c084fc 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+}
+
+[data-theme="dark"] .footer-left:hover .footer-text strong {
+    background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+}
+
+.heart {
+    color: #e74c3c;
+    display: inline-block;
+    animation: heartbeat 1.5s ease-in-out infinite;
+}
+
+@keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    10%, 30% { transform: scale(1.25); }
+    20%, 40% { transform: scale(1); }
+}
+
+/* Footer Buttons with Enhanced Effects */
+.footer-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.footer-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    background: rgba(30, 41, 59, 0.5);
+    color: #cbd5e0;
+    border: 1.5px solid rgba(148, 163, 184, 0.3);
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    white-space: nowrap;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Light mode buttons */
+body:not([data-theme="dark"]) .footer-btn {
+    background: rgba(51, 65, 85, 0.6);
+    color: #f1f5f9;
+    border-color: rgba(100, 116, 139, 0.4);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Shine effect on hover */
+.footer-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.footer-btn:hover::before {
+    left: 100%;
+}
+
+.footer-btn:hover {
+    background: var(--operator-bg);
+    color: var(--operator-text);
+    border-color: transparent;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px var(--shadow-lg);
+}
+
+.footer-btn:active {
+    transform: translateY(-1px);
+}
+
+.footer-btn svg {
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+}
+
+.footer-btn:hover svg {
+    transform: scale(1.2) rotate(5deg);
+}
+
+/* Right Side - Company + Tech */
+.footer-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    position: relative;
+    z-index: 1;
+}
+
+/* .company-name {
+    font-size: 16px;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: -0.3px;
+    white-space: nowrap;
+    text-shadow: 0 2px 6px rgba(102, 126, 234, 0.5);
+    cursor: default;
+}
+
+NO hover effect - completely static
+
+Remove all ::before and :hover sections for .company-name */
+
+.company-name {
+    font-size: 16px;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: -0.3px;
+    white-space: nowrap;
+    transition: all 0.3s ease;
+    cursor: default;
+    text-shadow: 0 2px 6px rgba(102, 126, 234, 0.5);
+}
+
+/* Subtle glow on hover - NO shine sweep */
+.footer-right:hover .company-name {
+    color: #ffffff;
+    text-shadow: 
+        0 3px 12px rgba(102, 126, 234, 0.9), 
+        0 0 25px rgba(118, 75, 162, 0.7);
+    transform: translateY(-2px);
+}
+
+/* REMOVE THESE - DELETE OR COMMENT OUT:
+.company-name::before {
+    ...delete this...
+}
+
+.footer-right:hover .company-name::before {
+    ...delete this...
+}
+*/
+
+
+/* Tech Pills with Enhanced Hover */
+.footer-tech {
+    display: flex;
+    gap: 8px;
+}
+
+.tech-pill {
+    padding: 5px 12px;
+    background: rgba(30, 41, 59, 0.6);
+    color: #cbd5e0;
+    border: 1px solid rgba(148, 163, 184, 0.3);
+    border-radius: 6px;
+    font-size: 10px;
+    font-weight: 700;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    white-space: nowrap;
+    cursor: pointer; /* Changed from default to pointer */
+    position: relative;
+    overflow: hidden;
+}
+
+body:not([data-theme="dark"]) .tech-pill {
+    background: rgba(51, 65, 85, 0.7);
+    color: #f1f5f9;
+    border-color: rgba(100, 116, 139, 0.4);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Shine sweep effect - SAME AS BUTTONS */
+.tech-pill::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.5s ease;
+}
+
+.tech-pill:hover::before {
+    left: 100%;
+}
+
+/* Enhanced hover - SAME AS BUTTONS */
+.tech-pill:hover {
+    background: var(--operator-bg);
+    color: var(--operator-text);
+    border-color: transparent;
+    transform: translateY(-4px) scale(1.08);
+    box-shadow: 0 6px 20px var(--shadow-lg);
+}
+
+.tech-pill:active {
+    transform: translateY(-2px) scale(1.05);
+}
+
+.version-pill {
+    padding: 5px 12px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 6px;
+    font-size: 10px;
+    font-weight: 700;
+    box-shadow: 0 3px 10px var(--shadow);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer; /* Changed to pointer */
+    position: relative;
+    overflow: hidden;
+}
+
+/* Shine effect - SAME AS BUTTONS */
+.version-pill::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    transition: left 0.5s ease;
+}
+
+.version-pill:hover::before {
+    left: 100%;
+}
+
+/* Enhanced hover - SAME AS BUTTONS */
+.version-pill:hover {
+    background: linear-gradient(135deg, #5568d3 0%, #6a3f8f 100%);
+    transform: translateY(-4px) rotate(3deg) scale(1.08);
+    box-shadow: 0 8px 25px var(--shadow-lg);
+}
+
+.version-pill:active {
+    transform: translateY(-2px) rotate(1deg) scale(1.05);
+}
+
+/* Copyright with Fade Effect */
+.footer-copyright {
+    text-align: center;
+    padding: 16px 20px;
+    border-top: 1px solid rgba(148, 163, 184, 0.1);
+    font-size: 12px;
+    color: #94a3b8;
+    background: rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+/* Light mode copyright */
+body:not([data-theme="dark"]) .footer-copyright {
+    color: #e2e8f0;
+    background: rgba(0, 0, 0, 0.3);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.footer-copyright:hover {
+    background: rgba(0, 0, 0, 0.3);
+    color: var(--text-primary);
+}
+
+.footer-copyright strong {
+    color: var(--text-primary);
+    font-weight: 700;
+}
+
+body:not([data-theme="dark"]) .footer-copyright strong {
+    color: #ffffff;
+}
+
+/* Responsive Footer */
+@media (max-width: 1024px) {
+    .footer-content {
+        flex-wrap: wrap;
+        justify-content: center;
+        text-align: center;
+    }
+    
+    .footer-left {
+        flex-direction: column;
+        gap: 12px;
+    }
+    
+    .footer-right {
+        flex-direction: column;
+        gap: 12px;
+    }
+}
+
+@media (max-width: 768px) {
+    .footer-content {
+        flex-direction: column;
+        padding: 20px;
+        gap: 20px;
+    }
+    
+    .footer-left,
+    .footer-right {
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    
+    .footer-text {
+        white-space: normal;
+    }
+    
+    .footer-buttons {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .footer-tech {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+}
+
+@media (max-width: 480px) {
+    .site-footer {
+        margin-top: 40px;
+    }
+    
+    .footer-content {
+        padding: 16px;
+    }
+    
+    .footer-text {
+        font-size: 13px;
+    }
+    
+    .company-name {
+        font-size: 14px;
+    }
+    
+    .footer-buttons {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .footer-btn {
+        width: 100%;
+        justify-content: center;
     }
 }
