@@ -1,5 +1,5 @@
 // ================================================
-// PREMIUM CALCULATOR - COMPLETE JAVASCRIPT
+// PREMIUM CALCULATOR - COMPLETE JAVASCRIPT V2.0
 // ================================================
 
 class Calculator {
@@ -13,15 +13,18 @@ class Calculator {
         this.formulas = this.initializeFormulas();
         this.init();
     }
-
+    
     init() {
-        this.setupModeSwitch();
-        this.setupThemeToggle();
-        this.setupCalculatorButtons();
-        this.setupKeyboard();
-        this.setupHistory();
-        this.setupFormulas();
-        this.loadHistory();
+    this.setupModeSwitch();
+    this.setupThemeToggle();
+    this.setupCalculatorButtons();
+    this.setupKeyboard();
+    this.setupHistory();
+    this.setupFormulas();
+    this.loadHistory();
+    this.setupInputField();
+    this.setupHelpModal();
+    this.setupDropdownFix(); // ADD THIS LINE
     }
 
     // ============ MODE SWITCHING ============
@@ -158,12 +161,17 @@ class Calculator {
         this.updateDisplay();
     }
 
-    // ============ CALCULATION ============
+    // ============ CALCULATION (ENHANCED) ============
     calculate() {
         if (!this.currentInput) return;
 
         try {
             let expression = this.currentInput;
+
+            // Check for division by zero
+            if (expression.includes('/0') || expression.includes('/ 0')) {
+                throw new Error('Cannot divide by zero');
+            }
 
             // Handle factorial
             expression = expression.replace(/(\d+)!/g, (match, num) => {
@@ -171,7 +179,6 @@ class Calculator {
             });
 
             // Replace math functions
-            const angleConv = this.angleMode === 'deg' ? ' * Math.PI / 180' : '';
             expression = expression.replace(/sin\(/g, `Math.sin(`);
             expression = expression.replace(/cos\(/g, `Math.cos(`);
             expression = expression.replace(/tan\(/g, `Math.tan(`);
@@ -183,6 +190,15 @@ class Calculator {
             expression = expression.replace(/sqrt\(/g, 'Math.sqrt(');
 
             const result = eval(expression);
+            
+            if (isNaN(result)) {
+                throw new Error('Invalid calculation');
+            }
+            
+            if (!isFinite(result)) {
+                throw new Error('Result is too large');
+            }
+            
             this.result = this.formatResult(result);
             this.lastAnswer = result;
 
@@ -190,17 +206,32 @@ class Calculator {
             this.updateDisplay();
 
         } catch (error) {
-            this.result = 'Error';
+            // Enhanced error messages
+            let errorMsg = 'Error';
+            
+            if (error.message.includes('divide by zero')) {
+                errorMsg = 'Cannot ÷ by 0';
+            } else if (error.message.includes('Invalid')) {
+                errorMsg = 'Invalid Input';
+            } else if (error.message.includes('too large')) {
+                errorMsg = 'Number Too Large';
+            } else {
+                errorMsg = 'Syntax Error';
+            }
+            
+            this.result = errorMsg;
             this.updateDisplay();
+            
             setTimeout(() => {
                 this.result = '0';
                 this.updateDisplay();
-            }, 2000);
+            }, 2500);
         }
     }
 
     factorial(n) {
         if (n === 0 || n === 1) return 1;
+        if (n > 170) return Infinity; // Prevent overflow
         let result = 1;
         for (let i = 2; i <= n; i++) {
             result *= i;
@@ -221,12 +252,51 @@ class Calculator {
         return rounded.toString();
     }
 
+    // ============ UPDATE DISPLAY (ENHANCED) ============
     updateDisplay() {
         document.getElementById('displayInput').textContent = this.currentInput || '';
         document.getElementById('displayResult').textContent = this.result;
+        
+        // Update input field too
+        const inputField = document.getElementById('calculatorInput');
+        if (inputField && this.currentMode !== 'formula') {
+            inputField.value = this.currentInput;
+        }
     }
 
-    // ============ HISTORY ============
+    // ============ INPUT FIELD SETUP ============
+    setupInputField() {
+        const inputField = document.getElementById('calculatorInput');
+        const clearBtn = document.getElementById('inputClearBtn');
+        
+        if (!inputField) return;
+        
+        // Sync input field with calculator
+        inputField.addEventListener('input', (e) => {
+            if (this.currentMode !== 'formula') {
+                this.currentInput = e.target.value;
+                this.updateDisplay();
+            }
+        });
+        
+        // Calculate on Enter key
+        inputField.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                this.calculate();
+            }
+        });
+        
+        // Clear button
+        if (clearBtn) {
+            clearBtn.addEventListener('click', () => {
+                inputField.value = '';
+                this.clear();
+                inputField.focus();
+            });
+        }
+    }
+
+    // ============ HISTORY (ENHANCED WITH CLICKABLE ITEMS) ============
     setupHistory() {
         document.getElementById('clearHistory').addEventListener('click', () => {
             if (confirm('Clear all history?')) {
@@ -262,6 +332,7 @@ class Calculator {
         this.renderHistory();
     }
 
+    // NEW: Clickable history items
     renderHistory() {
         const list = document.getElementById('historyList');
         
@@ -270,13 +341,87 @@ class Calculator {
             return;
         }
 
-        list.innerHTML = this.history.map(item => `
-            <div class="history-item">
+        list.innerHTML = this.history.map((item, index) => `
+            <div class="history-item" onclick="calculator.reuseCalculation(${index})" style="cursor: pointer;" title="Click to reuse">
                 <div><strong>${item.expression}</strong> = ${item.result}</div>
                 <small style="opacity: 0.7; font-size: 12px;">${item.timestamp}</small>
             </div>
         `).join('');
     }
+
+    // NEW: Reuse calculation from history
+    reuseCalculation(index) {
+        const item = this.history[index];
+        if (item && this.currentMode !== 'formula') {
+            this.currentInput = item.expression;
+            this.result = item.result;
+            this.updateDisplay();
+            
+            // Focus input field
+            const inputField = document.getElementById('calculatorInput');
+            if (inputField) {
+                inputField.focus();
+                inputField.setSelectionRange(inputField.value.length, inputField.value.length);
+            }
+        }
+    }
+
+    // ============ HELP MODAL (NEW) ============
+    setupHelpModal() {
+        const helpBtn = document.getElementById('helpBtn');
+        const modal = document.getElementById('shortcutsModal');
+        const closeBtn = document.getElementById('closeModal');
+        
+        if (!helpBtn || !modal) return;
+        
+        // Open modal
+        helpBtn.addEventListener('click', () => {
+            modal.classList.add('active');
+            modal.setAttribute('aria-hidden', 'false');
+        });
+        
+        // Close modal with button
+        if (closeBtn) {
+            closeBtn.addEventListener('click', () => {
+                this.closeModal(modal);
+            });
+        }
+        
+        // Close on outside click
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                this.closeModal(modal);
+            }
+        });
+        
+        // Close on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.classList.contains('active')) {
+                this.closeModal(modal);
+            }
+        });
+    }
+
+    closeModal(modal) {
+        modal.classList.remove('active');
+        modal.setAttribute('aria-hidden', 'true');
+    }
+
+    // ============ FIX DROPDOWN NAVIGATION ============
+setupDropdownFix() {
+    const subjectSelect = document.getElementById('subjectSelect');
+    const formulaSelect = document.getElementById('formulaSelect');
+    
+    [subjectSelect, formulaSelect].forEach(select => {
+        if (select) {
+            select.addEventListener('keydown', (e) => {
+                if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
+                    e.stopPropagation();
+                }
+            });
+        }
+    });
+}
 
     // ============ FORMULAS ============
     initializeFormulas() {
@@ -546,7 +691,8 @@ class Calculator {
                     <div class="input-group">
                         <label>${input.label}</label>
                         <input type="number" step="any" id="${input.id}" 
-                               placeholder="Enter ${input.label.toLowerCase()}">
+                               placeholder="Enter ${input.label.toLowerCase()}"
+                               aria-label="${input.label}">
                     </div>
                 `;
             });
@@ -587,8 +733,11 @@ class Calculator {
     }
 }
 
-// Initialize Calculator when page loads
+// Make calculator globally accessible and initialize
+let calculator;
+
 document.addEventListener('DOMContentLoaded', () => {
-    const calculator = new Calculator();
-    console.log('🧮 Premium Calculator initialized successfully!');
+    calculator = new Calculator();
+    window.calculator = calculator; // Make it global for history clicks
+    console.log('🧮 Premium Calculator V2.0 initialized successfully!');
 });
