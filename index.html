@@ -4,104 +4,142 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Premium emoji calculator with normal, scientific, and formula modes">
-    <title>🧮 Premium Calculator</title>
+    <meta name="author" content="ARQONX">
+    <meta name="keywords" content="calculator, scientific calculator, formula calculator, math, physics, chemistry">
+    <title>Premium Calculator | ARQONX AI</title>
     <link rel="stylesheet" href="style.css">
+    
+    <!-- Favicon (optional - add later) -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧮</text></svg>">
 </head>
 <body>
+    <!-- Main Container -->
     <div class="container">
         <div class="calculator-card">
-            <!-- Top Bar -->
+            
+            <!-- Top Bar with Mode Switches -->
             <div class="top-bar">
                 <div class="mode-switches">
-                    <button class="mode-btn active" data-mode="normal" title="Normal Calculator">😄</button>
-                    <button class="mode-btn" data-mode="scientific" title="Scientific Calculator">😈</button>
-                    <button class="mode-btn" data-mode="formula" title="Formula Calculator">😇</button>
+                    <button class="mode-btn active" data-mode="normal" title="Normal Calculator" aria-label="Normal Calculator">
+                        😄
+                    </button>
+                    <button class="mode-btn" data-mode="scientific" title="Scientific Calculator" aria-label="Scientific Calculator">
+                        😈
+                    </button>
+                    <button class="mode-btn" data-mode="formula" title="Formula Calculator" aria-label="Formula Calculator">
+                        😇
+                    </button>
                 </div>
-                <button class="theme-toggle" id="themeToggle" title="Toggle Theme">🌞</button>
+                <button class="theme-toggle" id="themeToggle" title="Toggle Dark/Light Mode" aria-label="Toggle Theme">
+                    🌞
+                </button>
             </div>
 
-            <!-- Display -->
-            <div class="display">
-                <div class="display-input" id="displayInput"></div>
-                <div class="display-result" id="displayResult">0</div>
+            <!-- Display Section -->
+            <div class="display" role="region" aria-label="Calculator Display">
+                <div class="display-input" id="displayInput" aria-live="polite"></div>
+                <div class="display-result" id="displayResult" aria-live="assertive">0</div>
+            </div>
+            
+            <!-- Editable Input Section -->
+            <div class="input-section">
+                <input 
+                    type="text" 
+                    id="calculatorInput" 
+                    class="calculator-input" 
+                    placeholder="Type or click buttons..."
+                    autocomplete="off"
+                    spellcheck="false"
+                    aria-label="Calculator Input Field">
+                <button 
+                    class="input-clear-btn" 
+                    id="inputClearBtn" 
+                    title="Clear input" 
+                    aria-label="Clear Input">
+                    ×
+                </button>
             </div>
 
-            <!-- Normal Calculator -->
-            <div class="calculator-view active" id="normalCalc">
+            <!-- Normal Calculator View -->
+            <div class="calculator-view active" id="normalCalc" role="region" aria-label="Normal Calculator">
                 <div class="button-grid normal-grid">
-                    <button class="calc-btn operator" data-action="clear">AC</button>
-                    <button class="calc-btn operator" data-action="backspace">⌫</button>
-                    <button class="calc-btn operator" data-value="%">%</button>
-                    <button class="calc-btn operator" data-value="/">÷</button>
-                    <button class="calc-btn" data-value="7">7</button>
-                    <button class="calc-btn" data-value="8">8</button>
-                    <button class="calc-btn" data-value="9">9</button>
-                    <button class="calc-btn operator" data-value="*">×</button>
-                    <button class="calc-btn" data-value="4">4</button>
-                    <button class="calc-btn" data-value="5">5</button>
-                    <button class="calc-btn" data-value="6">6</button>
-                    <button class="calc-btn operator" data-value="-">−</button>
-                    <button class="calc-btn" data-value="1">1</button>
-                    <button class="calc-btn" data-value="2">2</button>
-                    <button class="calc-btn" data-value="3">3</button>
-                    <button class="calc-btn operator" data-value="+">+</button>
-                    <button class="calc-btn span-2" data-value="0">0</button>
-                    <button class="calc-btn" data-value=".">.</button>
-                    <button class="calc-btn operator" data-action="equals">=</button>
+                    <button class="calc-btn operator" data-action="clear" aria-label="All Clear">AC</button>
+                    <button class="calc-btn operator" data-action="backspace" aria-label="Backspace">⌫</button>
+                    <button class="calc-btn operator" data-value="%" aria-label="Percentage">%</button>
+                    <button class="calc-btn operator" data-value="/" aria-label="Divide">÷</button>
+                    
+                    <button class="calc-btn" data-value="7" aria-label="7">7</button>
+                    <button class="calc-btn" data-value="8" aria-label="8">8</button>
+                    <button class="calc-btn" data-value="9" aria-label="9">9</button>
+                    <button class="calc-btn operator" data-value="*" aria-label="Multiply">×</button>
+                    
+                    <button class="calc-btn" data-value="4" aria-label="4">4</button>
+                    <button class="calc-btn" data-value="5" aria-label="5">5</button>
+                    <button class="calc-btn" data-value="6" aria-label="6">6</button>
+                    <button class="calc-btn operator" data-value="-" aria-label="Subtract">−</button>
+                    
+                    <button class="calc-btn" data-value="1" aria-label="1">1</button>
+                    <button class="calc-btn" data-value="2" aria-label="2">2</button>
+                    <button class="calc-btn" data-value="3" aria-label="3">3</button>
+                    <button class="calc-btn operator" data-value="+" aria-label="Add">+</button>
+                    
+                    <button class="calc-btn span-2" data-value="0" aria-label="0">0</button>
+                    <button class="calc-btn" data-value="." aria-label="Decimal Point">.</button>
+                    <button class="calc-btn operator" data-action="equals" aria-label="Equals">=</button>
                 </div>
             </div>
 
-            <!-- Scientific Calculator -->
-            <div class="calculator-view" id="scientificCalc">
+            <!-- Scientific Calculator View -->
+            <div class="calculator-view" id="scientificCalc" role="region" aria-label="Scientific Calculator">
                 <div class="button-grid scientific-grid">
-                    <button class="calc-btn operator" data-value="sin">sin</button>
-                    <button class="calc-btn operator" data-value="cos">cos</button>
-                    <button class="calc-btn operator" data-value="tan">tan</button>
-                    <button class="calc-btn operator" data-value="log">log</button>
-                    <button class="calc-btn operator" data-action="clear">AC</button>
+                    <button class="calc-btn operator" data-value="sin" title="Sine">sin</button>
+                    <button class="calc-btn operator" data-value="cos" title="Cosine">cos</button>
+                    <button class="calc-btn operator" data-value="tan" title="Tangent">tan</button>
+                    <button class="calc-btn operator" data-value="log" title="Logarithm (base 10)">log</button>
+                    <button class="calc-btn operator" data-action="clear" aria-label="All Clear">AC</button>
                     
-                    <button class="calc-btn operator" data-value="asin">sin⁻¹</button>
-                    <button class="calc-btn operator" data-value="acos">cos⁻¹</button>
-                    <button class="calc-btn operator" data-value="atan">tan⁻¹</button>
-                    <button class="calc-btn operator" data-value="ln">ln</button>
-                    <button class="calc-btn operator" data-value="/">÷</button>
+                    <button class="calc-btn operator" data-value="asin" title="Inverse Sine">sin⁻¹</button>
+                    <button class="calc-btn operator" data-value="acos" title="Inverse Cosine">cos⁻¹</button>
+                    <button class="calc-btn operator" data-value="atan" title="Inverse Tangent">tan⁻¹</button>
+                    <button class="calc-btn operator" data-value="ln" title="Natural Logarithm">ln</button>
+                    <button class="calc-btn operator" data-value="/" aria-label="Divide">÷</button>
                     
-                    <button class="calc-btn operator" data-value="^">x^y</button>
-                    <button class="calc-btn operator" data-value="sqrt">√</button>
+                    <button class="calc-btn operator" data-value="^" title="Power">x^y</button>
+                    <button class="calc-btn operator" data-value="sqrt" title="Square Root">√</button>
                     <button class="calc-btn" data-value="7">7</button>
                     <button class="calc-btn" data-value="8">8</button>
                     <button class="calc-btn" data-value="9">9</button>
                     
-                    <button class="calc-btn operator" data-value="x2">x²</button>
-                    <button class="calc-btn operator" data-value="x3">x³</button>
+                    <button class="calc-btn operator" data-value="x2" title="Square">x²</button>
+                    <button class="calc-btn operator" data-value="x3" title="Cube">x³</button>
                     <button class="calc-btn" data-value="4">4</button>
                     <button class="calc-btn" data-value="5">5</button>
                     <button class="calc-btn" data-value="6">6</button>
                     
-                    <button class="calc-btn operator" data-value="pi">π</button>
-                    <button class="calc-btn operator" data-value="e">e</button>
+                    <button class="calc-btn operator" data-value="pi" title="Pi (π)">π</button>
+                    <button class="calc-btn operator" data-value="e" title="Euler's Number">e</button>
                     <button class="calc-btn" data-value="1">1</button>
                     <button class="calc-btn" data-value="2">2</button>
                     <button class="calc-btn" data-value="3">3</button>
                     
-                    <button class="calc-btn operator" data-value="(">(</button>
-                    <button class="calc-btn operator" data-value=")">)</button>
+                    <button class="calc-btn operator" data-value="(" aria-label="Left Parenthesis">(</button>
+                    <button class="calc-btn operator" data-value=")" aria-label="Right Parenthesis">)</button>
                     <button class="calc-btn" data-value="0">0</button>
                     <button class="calc-btn" data-value=".">.</button>
-                    <button class="calc-btn operator" data-value="*">×</button>
+                    <button class="calc-btn operator" data-value="*" aria-label="Multiply">×</button>
                     
-                    <button class="calc-btn operator" data-value="!">n!</button>
-                    <button class="calc-btn operator" data-value="ans">ANS</button>
+                    <button class="calc-btn operator" data-value="!" title="Factorial">n!</button>
+                    <button class="calc-btn operator" data-value="ans" title="Last Answer">ANS</button>
                     <button class="calc-btn operator" data-value="+">+</button>
                     <button class="calc-btn operator" data-value="-">−</button>
                     <button class="calc-btn operator" data-action="equals">=</button>
                 </div>
             </div>
 
-            <!-- Formula Calculator -->
-            <div class="calculator-view" id="formulaCalc">
+            <!-- Formula Calculator View -->
+            <div class="calculator-view" id="formulaCalc" role="region" aria-label="Formula Calculator">
                 <div class="formula-section">
-                    <select class="subject-select" id="subjectSelect">
+                    <select class="subject-select" id="subjectSelect" aria-label="Select Subject">
                         <option value="">Select Subject...</option>
                         <option value="mathematics">📐 Mathematics</option>
                         <option value="physics">⚛️ Physics</option>
@@ -109,26 +147,88 @@
                         <option value="commerce">💰 Commerce</option>
                         <option value="geometry">📏 Geometry</option>
                     </select>
-                    <select class="formula-select" id="formulaSelect">
+                    
+                    <select class="formula-select" id="formulaSelect" aria-label="Select Formula">
                         <option value="">First select a subject...</option>
                     </select>
+                    
                     <div class="formula-inputs" id="formulaInputs"></div>
                 </div>
             </div>
 
             <!-- History Section -->
-            <div class="history-section">
+            <div class="history-section" role="region" aria-label="Calculation History">
                 <div class="history-header">
                     <h3>📜 History</h3>
-                    <button class="clear-history" id="clearHistory">Clear All</button>
+                    <button class="clear-history" id="clearHistory" aria-label="Clear All History">
+                        Clear All
+                    </button>
                 </div>
-                <div class="history-list" id="historyList">
+                <div class="history-list" id="historyList" role="list">
                     <div class="history-empty">No calculations yet</div>
                 </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Floating Help Button -->
+    <button class="help-btn" id="helpBtn" title="Keyboard Shortcuts" aria-label="Show Keyboard Shortcuts">
+        ❓
+    </button>
+
+    <!-- Keyboard Shortcuts Modal -->
+    <div class="shortcuts-modal" id="shortcutsModal" role="dialog" aria-labelledby="shortcutsTitle" aria-hidden="true">
+        <div class="shortcuts-content">
+            <h3 id="shortcutsTitle">⌨️ Keyboard Shortcuts</h3>
+            <button class="close-modal" id="closeModal" aria-label="Close Modal">×</button>
+            
+            <div class="shortcuts-list">
+                <div class="shortcut-item">
+                    <kbd>0-9</kbd>
+                    <span>Numbers</span>
+                </div>
+                <div class="shortcut-item">
+                    <kbd>+ - * /</kbd>
+                    <span>Basic operations</span>
+                </div>
+                <div class="shortcut-item">
+                    <kbd>Enter</kbd>
+                    <span>Calculate (=)</span>
+                </div>
+                <div class="shortcut-item">
+                    <kbd>Backspace</kbd>
+                    <span>Delete last character</span>
+                </div>
+                <div class="shortcut-item">
+                    <kbd>Esc</kbd>
+                    <span>Clear all (AC)</span>
+                </div>
+                <div class="shortcut-item">
+                    <kbd>C</kbd>
+                    <span>Clear</span>
+                </div>
+                <div class="shortcut-item">
+                    <kbd>%</kbd>
+                    <span>Percentage</span>
+                </div>
+                <div class="shortcut-item">
+                    <kbd>( )</kbd>
+                    <span>Parentheses</span>
+                </div>
+                <div class="shortcut-item">
+                    <kbd>.</kbd>
+                    <span>Decimal point</span>
+                </div>
+            </div>
+
+            <div class="shortcuts-tip">
+                <strong>💡 Pro Tip:</strong> You can type directly in the input field or use buttons!
             </div>
         </div>
     </div>
 
+    <!-- JavaScript -->
     <script src="script.js"></script>
 </body>
 </html>
