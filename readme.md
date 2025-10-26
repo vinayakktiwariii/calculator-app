@@ -32,7 +32,7 @@ A beautiful, feature-rich calculator web application with multiple modes, built 
 
 ## 🚀 Live Demo
 
-**[View Live Calculator →](https://calculator-arqonx.vercel.app)**
+**[View Live Calculator →]((https://calculator-app-silk-seven.vercel.app/))**
 
 ## 📸 Screenshots
 
@@ -64,8 +64,8 @@ A beautiful, feature-rich calculator web application with multiple modes, built 
 
 1. **Clone the repository**
 git clone https://github.com/vinayakktiwariii/calculator-app.git
-cd calculator-app
 
+cd calculator-app
 
 2. **Open with VS Code**
 
@@ -75,6 +75,7 @@ cd calculator-app
 - Browser opens at `http://localhost:5500`
 
 4. **Or simply open the file**
+
 Windows
 start index.html
 
@@ -85,15 +86,20 @@ Linux
 xdg-open index.html
 
 
-
 ## 📁 Project Structure
 
 calculator-app/
+
 ├── index.html # Main HTML file
+
 ├── style.css # All styles and animations
+
 ├── script.js # Calculator logic and functionality
+
 ├── README.md # Project documentation
+
 └── LICENSE # MIT License
+
 
 
 ## ⌨️ Keyboard Shortcuts
@@ -193,8 +199,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 👨‍💻 Author
 
 **Vinayak Tiwari**
-- Founder | Full Stack Developer
-- Company: [ArqonX AI Technologies](https://arqonx.com)
+- Founder | Full Stack Developer | AI/ML Engineer | Data science | Frontend Developer | UI/UX Designer
+- Company: [ArqonX AI Technologies](https://arqonx-ai.co)
 - GitHub: [@vinayakktiwariii](https://github.com/vinayakktiwariii)
 - Email: [arqonxaitechnologies@gmail.com](mailto:arqonxaitechnologies@gmail.com)
 
@@ -229,3 +235,4 @@ If you like this project, please give it a ⭐ on [GitHub](https://github.com/vi
 [⬆ Back to Top](#-premium-calculator)
 
 </div>
+
