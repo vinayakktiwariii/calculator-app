@@ -32,7 +32,7 @@ A beautiful, feature-rich calculator web application with multiple modes, built 
 
 ## 🚀 Live Demo
 
-**[View Live Calculator →]((https://calculator-app-silk-seven.vercel.app/))**
+**[View Live Calculator →](https://calculator-app-silk-seven.vercel.app/)**
 
 ## 📸 Screenshots
 
@@ -235,4 +235,5 @@ If you like this project, please give it a ⭐ on [GitHub](https://github.com/vi
 [⬆ Back to Top](#-premium-calculator)
 
 </div>
+
 
